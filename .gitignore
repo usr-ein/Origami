@@ -280,3 +280,13 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/vim,macos,python,pycharm,windows
+.idea/.gitignore
+.idea/.name
+.idea/MLModel.iml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/other.xml
+.idea/webResources.xml
+docs/_templates/
+model_cache/
