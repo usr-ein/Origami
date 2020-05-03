@@ -3,4 +3,4 @@ init:
 
 test:
 	mypy mlmodel --ignore-missing-imports
-	nosetests tests1
+	nosetests tests

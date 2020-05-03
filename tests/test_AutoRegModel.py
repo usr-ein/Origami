@@ -15,18 +15,12 @@ class TestAutoRegModel(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         df = pd.read_csv("tests/data_tests.csv")
-        df['intervalTime(ms)'] = pd.to_datetime(df['intervalTime(ms)'], unit='ms')
-        df.set_index(df['intervalTime(ms)'], inplace=True)
-        interestings_vals = [
-            'cfn-AutoScalingGroupFO_threads-Value',
-            'cfn-DevOpsEC2Instance_cpuaverage-Value',
-            'cfn-DMZEC2Instance_cpuaverage-Value',
-            'cfn-MOEC2Instance_threads-Value',
-            'rds_databaseconnections-Value',
-            'cfn-MOEC2Instance_cpuaverage-Value',
-            'cfn-DevOpsEC2Instance_threads-Value',
-        ]
-        df = df[interestings_vals]
+
+        # Converts the time col to a DateTimeIndex
+        df['time'] = pd.to_datetime(df['time'])
+        df.set_index(df['time'], inplace=True)
+        del df['time']
+
         cls.df = df
         cls.original_model = AutoRegModel((len(df.columns),), (len(df.columns),))
 
@@ -34,7 +28,8 @@ class TestAutoRegModel(unittest.TestCase):
         self.model = deepcopy(self.original_model)
 
     def tearDown(self) -> None:
-        self.model.clear_cache()
+        if hasattr(self, 'model'):
+            self.model.clear_cache()
 
     def test_train(self):
         self.assertRaises(AssertionError, self.model.train, self.df.values[:200], max_lag=300)
@@ -134,8 +129,8 @@ class TestAutoRegModel(unittest.TestCase):
 
         self.assertGreater(dt_1/2, dt_2)
         self.assertAlmostEqual(dt_1, dt_3, delta=dt_2)
-        self.assertAlmostEqual(dt_2, dt_4, delta=dt_2/10)
-        self.assertAlmostEqual(dt_4, dt_5, delta=dt_2/10)
+        self.assertAlmostEqual(dt_2, dt_4, delta=dt_2/5)
+        self.assertAlmostEqual(dt_4, dt_5, delta=dt_2/5)
 
         self.assertTrue(np.equal(pred_1, pred_3).all())
 

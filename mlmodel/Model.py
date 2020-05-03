@@ -12,8 +12,8 @@ import numpy as np
 class Model(ABC):
     """ A base class for any predictive model """
     trained: bool = False
-    input_shape: Tuple[int]
-    output_shape: Tuple[int]
+    input_shape: Tuple[int, ...]
+    output_shape: Tuple[int, ...]
     _cache_memory: Memory
 
     def __init__(self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], *args, **kwargs):
