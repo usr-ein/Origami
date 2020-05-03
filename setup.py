@@ -13,7 +13,7 @@ setup(
     long_description=readme,
     author='Samuel Prevost',
     author_email='samuel.prevost@pm.me',
-    url='https://github.com/kennethreitz/samplemod',
+    url='https://github.com/sam1902/MLModel',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )
