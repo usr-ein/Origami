@@ -25,7 +25,7 @@ class AutoRegModel(Model):
         assert data_fd.shape[0] >= self.max_lag
         assert steps >= 0
         preds_fd = self._model.forecast(data_fd, steps=steps)
-        preds = np.cumsum(preds_fd*1.005, axis=0) + data_fd[-1]
+        preds = np.cumsum(preds_fd*1.005, axis=0) + data[-1]
         preds = np.rint(preds)
         return preds
 
