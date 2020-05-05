@@ -69,7 +69,8 @@ class AutoRegModel(Model):
         preds = self.predict(data, steps)
         if return_dataframe:
             indices = np.cumsum([median_delta] * steps) + df.index[-1]
-            return pd.DataFrame(data=preds, index=indices, columns=df.columns)
+            index = pd.Index(data=indices, name=df.index.name)
+            return pd.DataFrame(data=preds, index=index, columns=df.columns)
         else:
             return preds
 
