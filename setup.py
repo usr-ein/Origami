@@ -11,7 +11,7 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     name='mlmodel',
-    version='0.1.1',
+    version='0.1.2',
     description='Sturdy interface for predictive ML models',
     long_description=readme,
     author='Samuel Prevost',
