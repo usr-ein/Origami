@@ -1,5 +1,5 @@
 init:
-	pip install -r requirements.txt
+	pip3 install --user -r requirements.txt
 
 test:
 	mypy mlmodel --ignore-missing-imports
