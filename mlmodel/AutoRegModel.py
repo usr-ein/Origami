@@ -21,8 +21,8 @@ class AutoRegModel(Model):
         self._model = model.fit(maxlags=max_lag, trend="n")
 
     def _predict(self, data: np.ndarray, steps: int = 200, *args: Any, **kwargs: Any) -> np.ndarray:
+        assert data.shape[0] > self.max_lag, "Missing values"
         data_fd = np.diff(data, axis=0)
-        assert data_fd.shape[0] >= self.max_lag
         assert steps >= 0
         preds_fd = self._model.forecast(data_fd, steps=steps)
         preds = np.cumsum(preds_fd*1.005, axis=0) + data[-1]
@@ -64,8 +64,14 @@ class AutoRegModel(Model):
         """
         assert isinstance(df.index, pd.DatetimeIndex), "DataFrame's index should be a datetime !"
         data = df.values
-        median_delta = np.median(np.diff(df.index.to_pydatetime()))
-        steps = int(np.ceil(duration/median_delta)) + 1
+        time_diffs = np.diff(df.index.to_pydatetime())
+        assert len(time_diffs) > 0, "Missing values"
+        median_delta = np.median(time_diffs)
+        try:
+            steps = int(np.ceil(duration/median_delta)) + 1
+        except ZeroDivisionError:
+            raise AssertionError("Invalid time steps")
+
         preds = self.predict(data, steps)
         if return_dataframe:
             indices = np.cumsum([median_delta] * steps) + df.index[-1]
