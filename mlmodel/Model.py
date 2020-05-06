@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+import warnings
 import os
 from typing import Tuple, final, Any
 from pathlib import Path
@@ -72,7 +73,9 @@ class Model(ABC):
         assert data.shape[-len(self.input_shape):] == self.input_shape, "Wrong shape"
         # Tries to use self._predict's cached results first
         predict_cached = self._cache_memory.cache(self._predict)
-        output = predict_cached(data, *args, **kwargs)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            output = predict_cached(data, *args, **kwargs)
         # Forces the output to fit in the given shape
         assert output.shape[-len(self.output_shape):] == self.output_shape, "Wrong shape"
         return output
