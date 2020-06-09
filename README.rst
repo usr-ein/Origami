@@ -13,7 +13,6 @@ generally avoid common pitfalls.
 
 Here are a few of these:
 
-- ~~Prediction's input data shape doesn't match what the model has been train on~~
 - Output data shape from prediction doesn't match what the caller expects
 - Calling the prediction method multiple times with the same input which could've
   been cached
