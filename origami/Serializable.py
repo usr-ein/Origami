@@ -13,7 +13,7 @@ class Serializable(ABC):
     """ Interface to render a class serializable easily. """
 
     @final
-    def dump(self, filepath: PathType, *args: Any, **kwargs: Any) -> None:
+    def dump(self, filepath: PathType, /, *args: Any, **kwargs: Any) -> None:
         """ Dumps the model and its cache into the designated file.
 
         :param filepath: Path to the file where to save the model.
@@ -33,7 +33,7 @@ class Serializable(ABC):
 
     @classmethod
     @final
-    def load(cls, filepath: PathType, *args: Any, **kwargs: Any) -> Serializable:
+    def load(cls, filepath: PathType, /, *args: Any, **kwargs: Any) -> Serializable:
         """ Loads back an instance of this class and its cache
             from the designated file.
 
