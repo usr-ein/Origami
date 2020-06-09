@@ -1,16 +1,20 @@
+""" Model class related stuff """
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import warnings
+import shutil
 import os
 from typing import Tuple, final, Any
 from pathlib import Path
-import joblib
+import joblib  # type: ignore
 from joblib import Memory
 import numpy as np
 
+from .Serializable import Serializable
 
-class Model(ABC):
+
+class Model(Serializable, ABC):
     """ A base class for any predictive model """
     trained: bool = False
     input_shape: Tuple[int, ...]
@@ -80,39 +84,10 @@ class Model(ABC):
         assert output.shape[-len(self.output_shape):] == self.output_shape, "Wrong shape"
         return output
 
-    @final
-    def dump(self, filepath: Path, *args: Any, **kwargs: Any) -> None:
-        """ Dumps the model and its cache into the designated file.
-
-        :param filepath: Path to the file where to save the model.
-         Should be in a writable, existing directory.
-         With the default implementation provided, the compression method
-         corresponding to one of the supported filename extensions
-         (‘.z’, ‘.gz’, ‘.bz2’, ‘.xz’ or ‘.lzma’) will be used automatically
-
-         see `joblib.dump <https://joblib.readthedocs.io/en/latest/generated/joblib.dump.html#joblib.dump>`_.
-        """
-        assert filepath.parent.is_dir() and os.access(str(filepath.parent.resolve().absolute()), os.W_OK)
-        self._dump(filepath, *args, **kwargs)
-
-    @classmethod
-    @final
-    def load(cls, filepath: Path, *args: Any, **kwargs: Any) -> Model:
-        assert filepath.is_file()
-        obj = cls._load(filepath, *args, **kwargs)
-        assert isinstance(obj, cls)
-        return obj
-
-    def _dump(self, filepath: Path, *args: Any, **kwargs: Any) -> None:
-        joblib.dump(value=self, filename=filepath)
-
-    @classmethod
-    def _load(cls, filepath: Path, *args: Any, **kwargs: Any) -> Model:
-        return joblib.load(filename=filepath)
-
     def clear_cache(self):
         """ Clears the model's prediction cache """
         self._cache_memory.clear(warn=False)
+        shutil.rmtree(self._cache_memory.location, ignore_errors=True)
 
     @abstractmethod
     def _train(self, data: np.ndarray, *args: Any, **kwargs: Any) -> None:

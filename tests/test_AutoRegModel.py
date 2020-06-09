@@ -3,6 +3,7 @@ import unittest
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import shutil
 import os
 from datetime import timedelta
 from time import time
@@ -104,7 +105,8 @@ class TestAutoRegModel(unittest.TestCase):
 
         def reload_model(self):
             """ Dumps, del and loads the model from a file """
-            fp = Path(f"test_model{int(time())}.joblib.gz")
+            #fp = Path(f"test_model{int(time())}.joblib.gz")
+            fp = f"test_model{int(time())}.joblib.gz"
             self.model.dump(fp)
             del self.model
             self.model = AutoRegModel.load(fp)
