@@ -24,7 +24,7 @@ autodoc_default_options = {
 
 # -- Project information -----------------------------------------------------
 
-project = 'MLModel'
+project = 'Origami'
 copyright = '2020, Samuel Prevost'
 author = 'Samuel Prevost'
 

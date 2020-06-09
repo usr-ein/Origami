@@ -10,13 +10,13 @@ with open('requirements.txt', 'r') as f:
     requirements = f.read()
 
 setup(
-    name='mlmodel',
+    name='origami',
     version='0.1.2',
     description='Sturdy interface for predictive ML models',
     long_description=readme,
     author='Samuel Prevost',
     author_email='samuel.prevost@pm.me',
-    url='https://github.com/sam1902/MLModel',
+    url='https://github.com/sam1902/Origami',
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
     install_requires=requirements

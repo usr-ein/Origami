@@ -8,7 +8,7 @@ from datetime import timedelta
 from time import time
 from copy import deepcopy
 
-from mlmodel import AutoRegModel
+from origami import AutoRegModel
 
 
 class TestAutoRegModel(unittest.TestCase):

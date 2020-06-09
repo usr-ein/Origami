@@ -282,7 +282,7 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/vim,macos,python,pycharm,windows
 .idea/.gitignore
 .idea/.name
-.idea/MLModel.iml
+.idea/Origami.iml
 .idea/inspectionProfiles/
 .idea/misc.xml
 .idea/modules.xml

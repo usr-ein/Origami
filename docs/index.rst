@@ -1,15 +1,15 @@
-Welcome to MLModel's documentation!
+Welcome to Origami's documentation!
 ===================================
 
 .. toctree::
     :maxdepth: 2
     :caption: Contents:
 
-.. automodule:: mlmodel.Model
+.. automodule:: origami.Model
     :special-members:
     :members:
 
-.. automodule:: mlmodel.AutoRegModel
+.. automodule:: origami.AutoRegModel
     :special-members:
     :members:
 

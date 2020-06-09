@@ -1,4 +1,4 @@
-MLModel
+Origami
 ========================
 
 A sturdy interface for predictive ML models
